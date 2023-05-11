@@ -9,14 +9,14 @@ public class CameraController_2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //Given ÇØ´ç Ä«¸Ş¶óÀÇ position °ª°ú, playerÀÇ position°ªÀÌ ÀÖ´Ù°í ÀüÁ¦¸¦ ÇÏ´Â ±â´ÉÀÌ ÀÖ±â¿¡, Awakeº¸´Ù´Â Start°¡ ÀûÀıÇÏ´Ù. 
+        //Given í•´ë‹¹ ì¹´ë©”ë¼ì˜ position ê°’ê³¼, playerì˜ positionê°’ì´ ìˆë‹¤ê³  ì „ì œë¥¼ í•˜ëŠ” ê¸°ëŠ¥ì´ ìˆê¸°ì—, Awakeë³´ë‹¤ëŠ” Startê°€ ì ì ˆí•˜ë‹¤. 
 
         offset = transform.position - player.transform.position;
     }
 
-    // Update ´Â ºñ·Ï »õ·Î¿î ÇÁ·¹ÀÓ ÀÌÀü¿¡ È£ÃâµÇÁö¸¸, Delegate += function Ã³·³ ¼ø¼­¸¦ º¸ÀåÇÏÁö´Â ¸øÇÑ´Ù. 
-    // Æ¯È÷ Camera offset °ª¿¡ µû¶ó Ä«¸Ş¶óÀÇ À§Ä¡°¡ °áÁ¤µÉ¶§, ÀÏ¹İÀûÀÎ ¹°¸®¿¬»êÇÔ¼öÀÌÈÄ¿¡ Update()°¡ µÇ¾î¾ß ÇÏ´Âµ¥, ÀÌ¸¦ º¸ÀåÇÏÁö ¸øÇÑ´Ù. 
-    // µû¶ó¼­ ÇØ´çscene ÀÇ ¸ğµç Game object ÀÇ ¸Ş¼¼ÁöÇÔ¼öÁß, Update() °¡ ´Ù ³¡³­ ÀÌÈÄ¿¡ ÁøÇàµÇ´Â FixedUpdate()¸¦ »ç¿ëÇÏ´Â°ÍÀÌ ÀÏ¹İÀûÀÌ°Ú´Ù. 
+    // Update ëŠ” ë¹„ë¡ ìƒˆë¡œìš´ í”„ë ˆì„ ì´ì „ì— í˜¸ì¶œë˜ì§€ë§Œ, Delegate += function ë•Œì™€ ë¹„ìŠ·í•˜ê²Œ í˜¸ì¶œìˆœì„œë¥¼ ë³´ì¥í•˜ì§€ëŠ” ëª»í•œë‹¤. 
+    // íŠ¹íˆ Camera offset ê°’ì— ë”°ë¼ ì¹´ë©”ë¼ì˜ ìœ„ì¹˜ê°€ ê²°ì •ë ë•Œ, ì¼ë°˜ì ì¸ ë¬¼ë¦¬ì—°ì‚°í•¨ìˆ˜ì´í›„ì— Update()ê°€ ë˜ì–´ì•¼ í•˜ëŠ”ë°, ì´ëŠ” ë³´ì¥ë˜ì§€ ì•ŠëŠ”ë‹¤. 
+    // ë”°ë¼ì„œ í•´ë‹¹scene ì˜ ëª¨ë“  Game object ì˜ ë©”ì„¸ì§€í•¨ìˆ˜ì¤‘, Update() ê°€ ë‹¤ ëë‚œ ì´í›„ì— ì§„í–‰ë˜ëŠ” FixedUpdate()ë¥¼ ì‚¬ìš©í•˜ëŠ”ê²ƒì´ ì¼ë°˜ì ì´ê² ë‹¤. 
     void Update()
     {
         
@@ -24,7 +24,7 @@ public class CameraController_2 : MonoBehaviour
 
     private void LateUpdate()
     {
-       // °°Àº ¸Æ¶ôÀ¸·Î ´Ù¸¥ ÇÔ¼ö°ªÀ» ÀÌ¿ëÇØ¾ßÇÏ´Â°æ¿ì¿¡µµ lateUpdate()°¡ ÇÊ¿äÇÏ°Ú´Ù. 
+       // ê°™ì€ ë§¥ë½ìœ¼ë¡œ ë‹¤ë¥¸ í•¨ìˆ˜ê°’ì„ (í”„ë ˆì„ ê¸°ì¤€ìœ¼ë¡œ) ì´ìš©í•´ì•¼í•˜ëŠ”ê²½ìš°ì—ë„ lateUpdate()ê°€ í•„ìš”í•˜ê² ë‹¤.
        transform.position = offset + player.transform.position;
     }
 }
