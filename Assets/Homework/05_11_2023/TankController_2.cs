@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TankController : MonoBehaviour
+public class TankController_2 : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody rigidbody; // 물리적 연산이 적용가능한 유니티 data type 이자 GameObject 에 추가 가능한 Component
