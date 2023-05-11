@@ -5,32 +5,33 @@ using UnityEngine;
 public class TankController_2 : MonoBehaviour
 {
     // Start is called before the first frame update
-    private Rigidbody rigidbody; // ¹°¸®Àû ¿¬»êÀÌ Àû¿ë°¡´ÉÇÑ À¯´ÏÆ¼ data type ÀÌÀÚ GameObject ¿¡ Ãß°¡ °¡´ÉÇÑ Component
+    private Rigidbody rigidbody; // ë¬¼ë¦¬ì  ì—°ì‚°ì´ ì ìš©ê°€ëŠ¥í•œ ìœ ë‹ˆí‹° data type ì´ì GameObject ì— ì¶”ê°€ ê°€ëŠ¥í•œ Component
     [Range(0, 50)]
     public int jumpForce; 
 
     void Start()
     {
-        // Rigidbody °¡ »ı¼ºµÇ¾úÀ¸¸ç, ÇØ´ç components ÀÌ gameobjÀÇ rigidbody ÄÄÆ÷³ÍÆ®¸¦ ÀÌ¹Ì Äİ¸µÇÏ°í ÀÖ´Ù°í °¡Á¤ÇÑ´Ù 
+        // Rigidbody ê°€ ìƒì„±ë˜ì—ˆìœ¼ë©°, í•´ë‹¹ components ì´ gameobjì˜ rigidbody ì»´í¬ë„ŒíŠ¸ë¥¼ ì´ë¯¸ ì½œë§í•˜ê³  ìˆë‹¤ê³  ê°€ì •í•œë‹¤ 
         rigidbody.AddForce(Vector3.up*(jumpForce*2), ForceMode.Impulse);
         gameObject.name = "Player";
-        Debug.Log("»ı¼ºµÇ¼­ ±â»µ Á¡ÇÁÇÕ´Ï´Ù ÅÊÅ©°¡"); 
+        Debug.Log("ìƒì„±ë˜ì„œ ê¸°ë» ì í”„í•©ë‹ˆë‹¤ íƒ±í¬ê°€"); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // ÀÌÀüÇÁ·¹ÀÓ¿¡ ÀÔ·Â¹ŞÀº °ªÀ» Àü´ŞÇÏ¸ç, ¸¸¾à KeyCode.Space°¡ ¸Â´Ù¸é true ¹İÈ¯ 
+        if (Input.GetKeyDown(KeyCode.Space)) // ì´ì „í”„ë ˆì„ì— ì…ë ¥ë°›ì€ ê°’ì„ ì „ë‹¬í•˜ë©°, ë§Œì•½ KeyCode.Spaceê°€ ë§ë‹¤ë©´ true ë°˜í™˜ 
         {
-            rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
-            Debug.Log("½ºÆäÀÌ½ºÅ° ÀÔ·Â");
+            rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse); // Where Addforce() ì‹¤ì‹œê°„ìœ¼ë¡œ independent of deltaTime set by game, í•´ë‹¹ ëŒ€ìƒì˜ velocity ê°’ì„ ë°˜í™˜í•©ë‹ˆë‹¤
+                                                                         // (by the fixedDeltaTime, default = 0.02s, default mass = 9.81 N or 1 kg)
+            Debug.Log("ìŠ¤í˜ì´ìŠ¤í‚¤ ì…ë ¥");
         }
     }
 
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>(); // ÀÌ¹Ì ÇØ´ç gameObject ¿¡ rigidbody¸¦ »ı¼ºÇÔ°ú µ¿½Ã¿¡ rigidbody ¿Í »óÈ£ÀÛ¿ëÀ» ÀÏÀ¸Å³ ÇÔ¼ö¸¦ ¸¸µé±â
-                                               // À§ÇÑ ÇÊ¼öÁ¶°ÇÀÎ, 
+        rigidbody = GetComponent<Rigidbody>(); // ì´ë¯¸ í•´ë‹¹ gameObject ì— rigidbodyë¥¼ ìƒì„±í•¨ê³¼ ë™ì‹œì— rigidbody ì™€ ìƒí˜¸ì‘ìš©ì„ ì¼ìœ¼í‚¬ í•¨ìˆ˜ë¥¼ ë§Œë“¤ê¸°
+                                               // ìœ„í•œ í•„ìˆ˜ì¡°ê±´ì¸, 
         jumpForce = 10; 
     }
 }
