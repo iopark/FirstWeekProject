@@ -6,6 +6,7 @@ public class TankController : MonoBehaviour
 {
     // Start is called before the first frame update
     private Rigidbody rigidbody; // 물리적 연산이 적용가능한 유니티 data type 이자 GameObject 에 추가 가능한 Component
+
     [Range(0, 50)]
     public int jumpForce; 
 

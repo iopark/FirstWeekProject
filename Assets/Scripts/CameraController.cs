@@ -5,7 +5,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
     public GameObject player;
-    private Vector3 offset; 
+    private Vector3 offset;
+    private Component getPointer; 
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +23,18 @@ public class CameraController : MonoBehaviour
         
     }
 
+    
+    void LookAt()
+    {
+        //Vector3 sightLimit = new Vector3
+        //transform.LookAt(new Vector3 (player.transform.po);
+        transform.LookAt(
+    }
     private void LateUpdate()
     {
        // 같은 맥락으로 다른 함수값을 이용해야하는경우에도 lateUpdate()가 필요하겠다. 
-       transform.position = offset + player.transform.position;
+        transform.position = offset + player.transform.position;
+        //transform.forward = new Vector3(0, player.transform.position.y, player.transform.forward.z); 
+        //LookAt(); 
     }
 }
