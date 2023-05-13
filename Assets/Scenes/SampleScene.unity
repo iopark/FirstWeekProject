@@ -238,6 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   jumpForce: 0
+  moveSpeed: 0
 --- !u!65 &225767451
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -309,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca08b27c25c928c43af8f090baaecd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotatingAngle: 0
   camera: {fileID: 963194227}
   movePower: 0
   jumpPower: 0
@@ -721,8 +723,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.37992215, y: 0.010260241, z: 0.003851657, w: 0.9249536}
-  m_LocalPosition: {x: 0, y: 10, z: -10}
+  m_LocalRotation: {x: 0.26445502, y: 0.041935, z: -0.011511155, w: 0.9634171}
+  m_LocalPosition: {x: -2.1946785, y: 15.4579315, z: -22.035181}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -742,6 +744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 225767449}
+  offset: 0
 --- !u!1 &1055281732
 GameObject:
   m_ObjectHideFlags: 0
@@ -1156,6 +1159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca08b27c25c928c43af8f090baaecd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotatingAngle: 0
   camera: {fileID: 0}
   movePower: 0
   jumpPower: 0

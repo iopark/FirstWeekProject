@@ -11,6 +11,9 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
     private float rotateVal;
 
+    [Header("회전각(Degrees)")]
+    public float rotatingAngle; 
+
     [SerializeField]
     private Camera camera; 
 
@@ -65,8 +68,8 @@ public class PlayerController : MonoBehaviour
         //회전을 transform 으로 진행할 경우 
         transform.Rotate(Vector3.up, moveDir.x *rotateSpeed * Time.deltaTime);
         // Where Rotate( Axis, float Angle, Space.Self by default) 
-        //camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime); 
-
+        camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime);
+        rotatingAngle = moveDir.x * rotateSpeed * Time.deltaTime; 
     }
 
     private void OnRotate(InputValue value)
@@ -83,7 +86,7 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 90, 0);
         //Euler 각도를 Quaternion 으로 변환 
 
-        transform.rotation.ToEulerAngles(); 
+        //transform.rotation.ToEulerAngles(); 
         //Quaternion angle => Euler's Angle 
 
 

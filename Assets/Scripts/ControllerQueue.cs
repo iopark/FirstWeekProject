@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class ControllerQueue : MonoBehaviour
 {
+
+    [Header("Controlling Now ")]
+    public GameObject playing;
+
     //특정 Scene 에서 Playable 한 gameObj 들을 관장하는 컴포넌트 
     private GameObject[] playableList;
     private Queue<GameObject> playable;
