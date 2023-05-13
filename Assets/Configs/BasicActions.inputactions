@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchUnit",
+                    "type": "Button",
+                    "id": "bb3ad86b-08a0-4194-8463-0e08a0105e71",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -240,6 +249,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Rotate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5d9fbb3c-96a0-4775-972f-3d96e86f668c",
+                    "path": "<Keyboard>/b",
+                    "interactions": "Press(behavior=2)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchUnit",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

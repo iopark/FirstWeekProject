@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         //회전을 transform 으로 진행할 경우 
         transform.Rotate(Vector3.up, moveDir.x *rotateSpeed * Time.deltaTime);
         // Where Rotate( Axis, float Angle, Space.Self by default) 
-        camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime); 
+        //camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime); 
 
     }
 
