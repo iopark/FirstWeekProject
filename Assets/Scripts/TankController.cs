@@ -39,6 +39,10 @@ public class TankController : MonoBehaviour
         jumpForce = 10; 
     }
 
+    private void OnMove(InputValue value)
+    {
+
+    }
     private void OnSwitchUnit(InputValue value)
     {
         controllerQueue = gameObject.GetComponent<ControllerQueue>();

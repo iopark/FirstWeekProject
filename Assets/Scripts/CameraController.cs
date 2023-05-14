@@ -6,19 +6,20 @@ public class CameraController : MonoBehaviour
 {
     public GameObject player;
 
-    [Range(0f, 10f)]
+    [Range(-20f, -5f)]
     public float offset;
     private float rotatingangle; 
     private Vector3 cameraPos; 
     private Component getPointer; 
     private PlayerController playerController;
+    private float fixedY; 
     // Start is called before the first frame update
     void Start()
     {
         //Given 해당 카메라의 position 값과, player의 position값이 있다고 전제를 하는 기능이 있기에, Awake보다는 Start가 적절하다. 
         //cameraPos = transform.position;
-
-        offset = 3f; 
+        fixedY = transform.position.y;
+        offset = -10f; 
         getPointer = player.GetComponentInChildren<SightEdge>(); 
         playerController = player.GetComponentInChildren<PlayerController>();
     }
@@ -45,7 +46,7 @@ public class CameraController : MonoBehaviour
         // 2D Grid로 보았을때에, Camera/ Tank SightCube 는 Tank 를 기점으로 회전값에 따라서 변화하는데, Camera 그리고 SightCube는 서로 대칭하는 관계이다. 
         // 나는 SightCube - Tank 의 회전값을 알고 있기에, 이를 이용해서 새로운 카메라 값을 설정하여주면 되겠다. 
 
-            /* General Idea: (O)Tank를 기점으로, y-axis 축으로 대칭되는 (B)카메라, 그리고 (A)탱크시야점을 찾아야 ㅎ나다면, 
+            /* General Idea: (O)Tank를 기점으로, y-axis 축으로 대칭되는 (B)카메라, 그리고 (A)탱크시야점을 찾아야 한다면, 
              * 1. Find vector AO 
              * 2. Normalize AO, (A.x,y,z/vAO) 
              * 3. Utilizing matrix rotation, (after switching angle -> radian), 
@@ -69,9 +70,11 @@ public class CameraController : MonoBehaviour
         float radian = ReturnRadian(rotatingangle); //Angle -> Radian 값 변화 
         Vector3 positionOA = getPointer.transform.position - player.transform.position;
         Vector3 positionOB = transform.position - player.transform.position;
-        cameraPos = (positionOB.normalized * offset); // 1,2,3,4 적용 
-        cameraPos = Quaternion.AngleAxis(playerController.rotatingAngle, Vector3.up) * cameraPos;
-        transform.position = cameraPos + player.transform.position;
+        cameraPos = (positionOA.normalized * offset); // 1,2,3,4 적용 
+        //cameraPos.y = fixedY;
+        cameraPos = Quaternion.AngleAxis(playerController.rotatingAngle, player.transform.up) * cameraPos; // 카메라-탱크-시야 대칭값을 추적 = 탱크-시야 회전값에 반대되는 좌표 * 카메라-탱크 고정벡터값
+        transform.position = cameraPos + player.transform.position + new Vector3(0,fixedY,0); // rotation matrix y-axis 기반으로 새로운 좌표값 + 기점이 되는 탱크좌표+기존의 카메라 수평 유지 
+        LookAt(); //마지막으로 시야큐브를 기점으로 회전시 수평유지 
 
     }
 
