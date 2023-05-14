@@ -8,13 +8,20 @@ public class TankController : MonoBehaviour
     // Start is called before the first frame update
     private Rigidbody rigidbody; // 물리적 연산이 적용가능한 유니티 data type 이자 GameObject 에 추가 가능한 Component
     private Vector3 moveDir;
-    private ControllerQueue controllerQueue;
     [Range(0, 50)]
     public int jumpForce;
 
     [Range(0, 50)]
     public int moveSpeed;
 
+    [Header("회전각(Degrees)")]
+    public float rotatingAngle;
+
+    [Range(0, 20)]
+    public float rotateSpeed;
+
+    [SerializeField]
+    private Camera camera;
 
     void Start()
     {
@@ -25,30 +32,50 @@ public class TankController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) // 이전프레임에 입력받은 값을 전달하며, 만약 KeyCode.Space가 맞다면 true 반환 
-        {
-            rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
-            Debug.Log("스페이스키 입력");
-        }
+        Move();
+        Rotate();
     }
-
     private void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>(); // 이미 해당 gameObject 에 rigidbody를 생성함과 동시에 rigidbody 와 상호작용을 일으킬 함수를 만들기
-                                               // 위한 필수조건인, 
-        jumpForce = 10; 
+        rigidbody = GetComponent<Rigidbody>();
+        moveSpeed = 1;
+        jumpForce = 1;
+        rotateSpeed = 15;
+        //cameraComponent = gameObject.GetComponentInChildren<CameraController>();
     }
 
     private void OnMove(InputValue value)
     {
-
+        moveDir.x = value.Get<Vector2>().x;
+        moveDir.z = value.Get<Vector2>().y;
     }
-    private void OnSwitchUnit(InputValue value)
+
+    private void Rotate()
     {
-        controllerQueue = gameObject.GetComponent<ControllerQueue>();
-        this.enabled = false;
-        GameObject nextPlayable = controllerQueue.Switch(gameObject); 
-        nextPlayable.GetComponent<PlayerInput>().enabled = true; 
+        //회전을 transform 으로 진행할 경우 
+        transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime);
+        // Where Rotate( Axis, float Angle, Space.Self by default) 
+        camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime);
+        rotatingAngle = moveDir.x * rotateSpeed * Time.deltaTime;
+    }
+
+    private void OnJump(InputValue value)
+    {
+        Jump();
+    }
+
+    private void Jump()
+    {
+        rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
+    }
+
+    private void Move()
+    {
+        //rb.AddForce(moveDir*movePower);
+        //transform.Translate(moveDir * movePower * Time.deltaTime, Space.World);
+        //transform.Translate(moveDir * movePower * Time.deltaTime, Space.Self);
+        transform.Translate(Vector3.forward * moveSpeed * moveDir.z * Time.deltaTime, Space.Self);
+        // Where in Space.Self, front&back is determined by z axis,
     }
 
     private void OnDisable()

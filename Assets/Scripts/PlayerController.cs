@@ -29,11 +29,10 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        movePower = 1; 
-        jumpPower = 1;
-        rotateSpeed = 15;
-        //cameraComponent = gameObject.GetComponentInChildren<CameraController>();
+        rb = GetComponent<Rigidbody>(); // 이미 해당 gameObject 에 rigidbody를 생성함과 동시에 rigidbody 와 상호작용을 일으킬 함수를 만들기
+                                        // 위한 필수조건인, 
+        jumpPower = 10;
+        movePower = 10;
     }
 
     private void OnMove(InputValue value)
@@ -45,8 +44,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         Move();
-        Rotate();
-        LookAt(); 
     }
 
     private void Jump()
@@ -54,13 +51,10 @@ public class PlayerController : MonoBehaviour
         rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
     }
 
+
     private void Move()
     {
-        //rb.AddForce(moveDir*movePower);
-        //transform.Translate(moveDir * movePower * Time.deltaTime, Space.World);
-        //transform.Translate(moveDir * movePower * Time.deltaTime, Space.Self);
-        transform.Translate(Vector3.forward * movePower * moveDir.z* Time.deltaTime, Space.Self);
-        // Where in Space.Self, front&back is determined by z axis,
+        rb.AddForce(moveDir * movePower);
     }
 
     private void Rotate()
@@ -68,35 +62,19 @@ public class PlayerController : MonoBehaviour
         //회전을 transform 으로 진행할 경우 
         transform.Rotate(Vector3.up, moveDir.x *rotateSpeed * Time.deltaTime);
         // Where Rotate( Axis, float Angle, Space.Self by default) 
-        camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime);
-        rotatingAngle = moveDir.x * rotateSpeed * Time.deltaTime; 
-    }
-
-    private void OnRotate(InputValue value)
-    {
-        rotateVal = value.Get<float>();
-        Debug.Log("Rotate input is placed"); 
+        //camera.transform.Rotate(Vector3.up, moveDir.x * rotateSpeed * Time.deltaTime);
+        //rotatingAngle = moveDir.x * rotateSpeed * Time.deltaTime; 
     }
 
     private void Rotation()
     {
         transform.rotation = Quaternion.identity; // assumes value as (0,0,0)  
         // transform.position = new Vector3(0,0,0); 
-
         transform.rotation = Quaternion.Euler(0, 90, 0);
         //Euler 각도를 Quaternion 으로 변환 
-
         //transform.rotation.ToEulerAngles(); 
         //Quaternion angle => Euler's Angle 
-
-
     }
-
-    public void LookAt()
-    {
-
-    }
-
     /// <summary>
     /// Will only respond if Unity engine sends message corresponding to the OnJump() Function material, decided by the INput System 
     /// </summary>
@@ -107,5 +85,15 @@ public class PlayerController : MonoBehaviour
         Jump(); 
         //Jump(); 
         //rb.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
+    }
+
+    private void OnDisable()
+    {
+        Debug.Log("컨트롤러 잠시 종료");
+    }
+
+    private void OnEnable()
+    {
+        Debug.Log("컨트롤러 시작");
     }
 }
