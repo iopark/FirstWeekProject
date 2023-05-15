@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +31,8 @@ public class ControllerQueue : MonoBehaviour
     // Update is called once per frame
     private void OnSwitchUnit(InputValue value)
     {
+        if (playableList.Length <= 1)
+            return;
         SetCurrentController(current);
         GameObject newControllable = playable.Dequeue();
         playable.Enqueue(current);

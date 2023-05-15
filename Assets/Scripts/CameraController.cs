@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; 
 
 public class CameraController : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class CameraController : MonoBehaviour
     private Vector3 cameraPos; 
     private Component getPointer; 
     private TankController playerController;
-    private float fixedY; 
+    private float fixedY;
+    [SerializeField]
+    private TextMeshProUGUI countText; 
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +25,9 @@ public class CameraController : MonoBehaviour
         offset = -10f; 
         getPointer = player.GetComponentInChildren<SightEdge>(); 
         playerController = player.GetComponentInChildren<TankController>();
+        TextMeshProUGUI test = Instantiate(countText, transform.position, transform.rotation);
+        transform.parent = test.transform;
+        transform.localScale = test.transform.localScale; 
     }
 
     // Update 는 비록 새로운 프레임 이전에 호출되지만, Delegate += function 처럼 순서를 보장하지는 못한다. 
