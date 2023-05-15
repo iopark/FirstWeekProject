@@ -25,23 +25,25 @@ public class TankController : MonoBehaviour
     [SerializeField]
     private Camera camera;
     [SerializeField]
-    private Transform bulletPoint; // 이런식으로 그저 stat 으로 조정하기 어려운 position 에 대해서는 UI 로 조정이 가능해진다. 
+    private Transform bulletPoint; // 이런식으로 세세하게 숫자로로 조정하기 어려운 position 에 대해서는 UI 로 편리하게 조정이후에 응용이 unity에서는 가능하다. 
     [SerializeField]
-    private float repeatTime; 
+    private float repeatTime; // 연사 interval 설정해주기 
     [SerializeField]
     private Bullet bulletPrefab;
     [SerializeField]
     private int bulletCount; //Initially fill up to 20 
-    private int bulletLimit;
+    private int bulletLimit; // 아머리 20발로 제한 설정 
     [Header("Ammo Status")]
     public TextMeshProUGUI AmmoStatus;
-    public int reloadTimeCounter; 
+    public int reloadTimeCounter;
+    private bool reloading;
     void Start()
     {
         // Rigidbody 가 생성되었으며, 해당 components 이 gameobj의 rigidbody 컴포넌트를 이미 콜링하고 있다고 가정한다 
         gameObject.name = "Player";
         bulletCount = bulletLimit;
         bulletLimit = 20;
+        reloading = false;
 
     }
     // Update is called once per frame
@@ -53,7 +55,7 @@ public class TankController : MonoBehaviour
     private void Awake()
     {
         reloadTimeCounter = 0;
-        repeatTime = 0.5f; 
+        repeatTime = 0.5f;
         rigidbody = GetComponent<Rigidbody>();
         moveSpeed = 1;
         jumpForce = 1;
@@ -81,6 +83,12 @@ public class TankController : MonoBehaviour
     }
     private void OnFire(InputValue value)
     {
+        if (reloading) // 장전중인 상태일때는 발사가 되면 너무 사기임으로
+        {
+            //가드 방식으로 예외처리 
+            //AmmoStatus.text = "Reloading";
+            return;
+        }
         Debug.Log("Fire");
         //GameObject obj =  Instantiate(bulletPrefab); // GameObject.Function: Instantiate the targeting object 
         //obj.transform.position = transform.position;
@@ -89,16 +97,16 @@ public class TankController : MonoBehaviour
         {
             Debug.Log("Ran out of Ammo");
             AmmoStatus.text = "Reload!";
-            return; 
+            return;
         }
-        --bulletCount; 
+        --bulletCount;
         Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation);
-        SetText(); 
+        SetText();
     }
 
     private void Jump()
     {
-        rigidbody.AddForce(Vector3.up*jumpForce, ForceMode.Impulse);
+        rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
     private void Move()
@@ -111,65 +119,77 @@ public class TankController : MonoBehaviour
     }
 
     private Coroutine bulletRoutine;
-    private Coroutine bulletReload; 
+    private Coroutine bulletReload;
 
     IEnumerator BulletMakeRoutine()
     {
-        while (bulletCount > 0)
+        while (bulletCount > 0 && !reloading)
         {
             Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation);
+            //인스턴시에이트: (생성전 인스턴트, #오버로드사항들)을 통해서 해당씬에 즉시 생성이 가능하게 해주는 GameObject Function 이다. 
             --bulletCount;
             SetText();
             yield return new WaitForSeconds(repeatTime);
         }
-        AmmoStatus.text = "Reload!"; 
-        Debug.Log("Continuous Fire stopped: Ran out of Ammo"); 
+        if (reloading)
+            AmmoStatus.text = "Reloading!";
+        AmmoStatus.text = "Reload!";
+        Debug.Log("Continuous Fire stopped: Ran out of Ammo");
     }
 
+    /// <summary>
+    /// 장전을 위한 코루틴. 프레임시간과 별개로 3초동안 시행한다. 
+    /// </summary>
+    /// <returns></returns>
     IEnumerator BulletReload()
     {
         //Reload takes 3 seconds. 
-        int count = 1; 
+        int count = 1;
         while (count < 4)
         {
-            AmmoStatus.text = $"Reloading Rounds : {count} /3"; 
-            count++; 
-            yield return new WaitForSeconds(1); 
+            reloading = true;
+            AmmoStatus.text = $"Reloading Rounds : {count} /3";
+            count++;
+            yield return new WaitForSeconds(1); //1초를 텀으로 해당 Ienumerator/ for loop MoveNext(), Current()를 반복호출한다. Frame 사이에서 교묘하게. 
         }
+        // 만약 While(true) {} 이였다면 frame을 비롯한 /근거하는 Update()들은 호출되지않은채로 게임은 중지한상태가 될것이겠다. 
+        reloading = false; //장전이 다 되었다면 다시 false, 사격은 계속되어야하니. 
         bulletCount = bulletLimit;
         SetText();
-        Debug.Log("Reload End"); 
+        Debug.Log("Reload End");
     }
     private void OnRepeatFire(InputValue value)
     {
-        if (value.isPressed)
+        if (value.isPressed && !reloading) // 연사또한 장전중이라면 진행되면 너무 사기임으로 
         {
             Debug.Log("button Pressed"); // Here, implement premade coroutine for the continuous fire 
             bulletRoutine = StartCoroutine(BulletMakeRoutine());
-            // instace is saved, so it could be called back for stopping 
+            // instance is saved, so it could be called back for stopping 
         }
         else
         {
             StopCoroutine(bulletRoutine); // Stop the saved instance of the coroutine 
-            Debug.Log("Button letgo");
+            Debug.Log("Button letgo"); // 작업도중 테스트/반응 테스트하기위한 최소한의 꼭 필요한 작업 
         }
     }
 
     private void SetText()
     {
-        AmmoStatus.text = $"{bulletCount.ToString()}/{bulletLimit.ToString()}\t "; 
+        //TMPro GUI 에 .text 로 필요한 정보를 노출시킬수 있다. 
+        AmmoStatus.text = $"{bulletCount.ToString()}/{bulletLimit.ToString()}\t ";
 
     }
 
     private void OnReload(InputValue value)
     {
-        Debug.Log("Reload Start"); 
+        //Reload 키가 입력될때마다 실행한다 -> 코루틴을 
+        Debug.Log("Reload Start");
         StartCoroutine(BulletReload());
     }
 
     private void OnDisable()
     {
-        Debug.Log("탱크컨트롤러 잠시 종료"); 
+        Debug.Log("탱크컨트롤러 잠시 종료");
     }
 
     private void OnEnable()

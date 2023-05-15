@@ -27,7 +27,7 @@ public class CameraController : MonoBehaviour
         playerController = player.GetComponentInChildren<TankController>();
         TextMeshProUGUI test = Instantiate(countText, transform.position, transform.rotation);
         transform.parent = test.transform;
-        transform.localScale = test.transform.localScale; 
+        test.transform.localScale = transform.localScale;
     }
 
     // Update 는 비록 새로운 프레임 이전에 호출되지만, Delegate += function 처럼 순서를 보장하지는 못한다. 
