@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     private Rigidbody rigidbody;
+
     [SerializeField] private float bulletSpeed; 
     private void Awake()
     {

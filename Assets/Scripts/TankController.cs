@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class TankController : MonoBehaviour
 {
@@ -37,6 +39,8 @@ public class TankController : MonoBehaviour
     public TextMeshProUGUI AmmoStatus;
     public int reloadTimeCounter;
     private bool reloading;
+
+    public UnityEvent OnFired; 
     void Start()
     {
         // Rigidbody 가 생성되었으며, 해당 components 이 gameobj의 rigidbody 컴포넌트를 이미 콜링하고 있다고 가정한다 

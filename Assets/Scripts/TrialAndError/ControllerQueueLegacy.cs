@@ -4,7 +4,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class ControllerQueue : MonoBehaviour
+public class ControllerQueueLegacy : MonoBehaviour
 {
 
     [Header("Controlling Now ")]
