@@ -6113,6 +6113,6 @@ PrefabInstance:
     - target: {fileID: 6939626076042520365, guid: 45c942fb695c2984e93ba1ee3d4ee557, type: 3}
       propertyPath: explosive
       value: 
-      objectReference: {fileID: 4297076194556750115, guid: 45c942fb695c2984e93ba1ee3d4ee557, type: 3}
+      objectReference: {fileID: 195792, guid: c97f19143e604d9448612fb34c295ac2, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 45c942fb695c2984e93ba1ee3d4ee557, type: 3}
