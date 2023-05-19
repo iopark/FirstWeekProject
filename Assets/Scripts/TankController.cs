@@ -9,17 +9,15 @@ using UnityEngine.SceneManagement;
 public class TankController : MonoBehaviour
 {
     // Start is called before the first frame update
+    [Header("Move Related")]
     private Rigidbody rigidbody; // 물리적 연산이 적용가능한 유니티 data type 이자 GameObject 에 추가 가능한 Component
     private Vector3 moveDir;
     [Range(0, 50)]
     public int jumpForce;
-
     [Range(0, 50)]
     public int moveSpeed;
-
     [Header("회전각(Degrees)")]
     public float rotatingAngle;
-
     [Range(0, 20)]
     public float rotateSpeed;
 
@@ -177,7 +175,7 @@ public class TankController : MonoBehaviour
         }
     }
 
-    private void SetText()
+    private void SetText() // 이것또한 MVC 에 의거해서 분리작업을 실시할수 있다: this case, UnityEvent 사용하여
     {
         //TMPro GUI 에 .text 로 필요한 정보를 노출시킬수 있다. 
         AmmoStatus.text = $"{bulletCount.ToString()}/{bulletLimit.ToString()}\t ";
@@ -193,11 +191,11 @@ public class TankController : MonoBehaviour
 
     private void OnDisable()
     {
-        Debug.Log("탱크컨트롤러 잠시 종료");
+        Debug.Log("탱크활정");
     }
 
     private void OnEnable()
     {
-        Debug.Log("탱크컨트롤러 시작");
+        Debug.Log("탱크활성화");
     }
 }
