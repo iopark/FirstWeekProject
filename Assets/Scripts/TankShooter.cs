@@ -17,8 +17,8 @@ public class TankShooter : MonoBehaviour
 
     private void Start()
     { 
-        muzzlePointer = GetComponent<Transform>();
-        bulletPrefab = GetComponent<Bullet>();
+        //muzzlePointer = GetComponent<Transform>();
+        //bulletPrefab = GetComponent<Bullet>();
         bulletLimit = 20;
         bulletCount = bulletLimit; 
         reloading = false;
