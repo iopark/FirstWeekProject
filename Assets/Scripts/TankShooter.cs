@@ -17,8 +17,6 @@ public class TankShooter : MonoBehaviour
 
     private void Start()
     { 
-        //muzzlePointer = GetComponent<Transform>();
-        //bulletPrefab = GetComponent<Bullet>();
         bulletLimit = 20;
         bulletCount = bulletLimit; 
         reloading = false;
@@ -28,8 +26,10 @@ public class TankShooter : MonoBehaviour
 
     private void Shoot()
     {
+        
         Instantiate(bulletPrefab, muzzlePointer.transform.position, muzzlePointer.transform.rotation);
         bulletCount--;
+        GameManager.Data.ShootCount(bulletCount, bulletLimit);
     }
     private void OnFire(InputValue value)
     {
@@ -40,9 +40,6 @@ public class TankShooter : MonoBehaviour
             return;
         }
         Debug.Log("Fire");
-        //GameObject obj =  Instantiate(bulletPrefab); // GameObject.Function: Instantiate the targeting object 
-        //obj.transform.position = transform.position;
-        //obj.transform.rotation = transform.rotation;
         if (bulletCount <= 0)
         {
             Debug.Log("Ran out of Ammo");
@@ -50,9 +47,6 @@ public class TankShooter : MonoBehaviour
             return;
         }
         Shoot();
-        //--bulletCount;
-        //Instantiate(bulletPrefab, muzzlePointer.transform.position, muzzlePointer.transform.rotation);
-        //SetText();
     }
     private void OnRepeatFire(InputValue value)
     {

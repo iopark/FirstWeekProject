@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class VfxManager : MonoBehaviour
 {
-    public UnityEvent shell; 
+    public UnityAction shell; 
 
     public void ShellExplode()
     {
